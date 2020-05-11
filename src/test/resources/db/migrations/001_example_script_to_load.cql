@@ -1,0 +1,1 @@
+create keyspace if not exists example with replication = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
