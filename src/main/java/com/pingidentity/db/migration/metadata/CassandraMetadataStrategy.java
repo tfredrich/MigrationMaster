@@ -54,7 +54,7 @@ implements MetadataStrategy
 			throw new MigrationException("Migration metadata intialization failed");
 		}
 
-		rs = session.execute(String.format("create table if not exists %s.%s-lock (" +
+		rs = session.execute(String.format("create table if not exists %s.%s_lock (" +
 				"name text," +
 				"locked_at timestamp," +
 				"primary key (name)" +
@@ -85,7 +85,7 @@ implements MetadataStrategy
 
 	public boolean acquire(Session session)
 	{
-		PreparedStatement ps = session.prepare(String.format("insert into %s.%s-lock (name, locked_at) values (?, ?) if not exists",
+		PreparedStatement ps = session.prepare(String.format("insert into %s.%s_lock (name, locked_at) values (?, ?) if not exists",
 			config.getKeyspace(), config.getMetadataTable()));
 		ResultSet rs = session.execute(ps.bind(MIGRATIONS_KEY, System.currentTimeMillis()));
 
@@ -96,7 +96,7 @@ implements MetadataStrategy
 	{
 		if (this.lockCheckStatement == null)
 		{
-			this.lockCheckStatement = session.prepare(String.format("select count(*) from %s.%s-lock where name = ?", config.getKeyspace(), config.getMetadataTable()));
+			this.lockCheckStatement = session.prepare(String.format("select count(*) from %s.%s_lock where name = ?", config.getKeyspace(), config.getMetadataTable()));
 		}
 
 		ResultSet rs = session.execute(lockCheckStatement.bind(MIGRATIONS_KEY));
@@ -108,7 +108,7 @@ implements MetadataStrategy
 
 	public void release(Session session)
 	{
-		PreparedStatement ps = session.prepare(String.format("delete from %s.%s-lock where name = ? if exists",
+		PreparedStatement ps = session.prepare(String.format("delete from %s.%s_lock where name = ? if exists",
 			config.getKeyspace(), config.getMetadataTable()));
 		ResultSet rs = session.execute(ps.bind(MIGRATIONS_KEY));
 
