@@ -2,14 +2,14 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.pingidentity.db</groupId>
+  <groupId>com.strategicgains.cassandra</groupId>
   <artifactId>MigrationMaster</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>MigrationMaster</name>
   <url>http://maven.apache.org</url>
-  <description>Java-based database evolution.</description>
+  <description>Java-based database evolution for Cassandra.</description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
