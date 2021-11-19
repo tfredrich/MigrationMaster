@@ -1,9 +1,9 @@
-package com.pingidentity.db.migration.metadata;
+package com.strategicgains.cassandra.migration.metadata;
 
 import java.util.Date;
 
-import com.pingidentity.db.migration.Migration;
-import com.pingidentity.db.migration.ScriptMigration;
+import com.strategicgains.cassandra.migration.Migration;
+import com.strategicgains.cassandra.migration.ScriptMigration;
 
 public class Metadata
 {

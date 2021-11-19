@@ -1,4 +1,4 @@
-package com.pingidentity.db.migration;
+package com.strategicgains.cassandra.migration;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,7 @@ public class ClasspathMigrationLoader
 	{
 		String scriptLocation = (config.getScriptLocation().startsWith("/") ? config.getScriptLocation().substring(1) : config.getScriptLocation());
 		Collection<File> scriptFiles = loadScriptFiles(scriptLocation);
-		Collection<Migration> migrations = new ArrayList<Migration>(scriptFiles.size());
+		Collection<Migration> migrations = new ArrayList<>(scriptFiles.size());
 
 		scriptFiles.forEach(new Consumer<File>()
 		{
@@ -55,12 +56,12 @@ public class ClasspathMigrationLoader
 					}
 					else
 					{
-						LOG.warn("Unable to parse version from script filename. Skipped: " + file.getName());
+						LOG.warn("Unable to parse version from script filename. Skipped: {}.", file.getName());
 					}
 				}
 				else
 				{
-					LOG.info("Skipping file in migrations directory: " + file.getName());
+					LOG.info("Skipping file in migrations directory: {}.", file.getName());
 				}
 			}
 
@@ -68,17 +69,13 @@ public class ClasspathMigrationLoader
 			throws IOException
 			{
 				StringBuilder sb = new StringBuilder();
-				Files.readAllLines(file.toPath(), Charset.defaultCharset()).forEach(new Consumer<String>()
+				Files.readAllLines(file.toPath(), Charset.defaultCharset()).forEach(t ->
 				{
-					@Override
-					public void accept(String t)
-					{
-						String trimmed = t.trim();
+					String trimmed = t.trim();
 
-						if (!trimmed.isEmpty())
-						{
-							sb.append(t);
-						}
+					if (!trimmed.isEmpty())
+					{
+						sb.append(t);
 					}
 				});
 
@@ -112,25 +109,20 @@ public class ClasspathMigrationLoader
 
 		if (!urls.hasMoreElements())
 		{
-			LOG.warn("Unable to resolve location " + scriptLocation);
+			LOG.warn("Unable to resolve location {}.", scriptLocation);
 			return Collections.emptyList();
 		}
 
-		Collection<File> files = new ArrayList<File>();
+		Collection<File> files = new ArrayList<>();
 
 		while (urls.hasMoreElements())
 		{
 			try
 			{
-				Files.walk(Paths.get(urls.nextElement().toURI()))
-					.forEach(new Consumer<Path>()
-					{
-						@Override
-						public void accept(Path t)
-						{
-							files.add(t.toFile());
-						}
-					});
+				try (Stream<Path> stream = Files.walk(Paths.get(urls.nextElement().toURI())))
+				{
+					stream.forEach(t -> files.add(t.toFile()));
+				}
 			}
 			catch (URISyntaxException e)
 			{

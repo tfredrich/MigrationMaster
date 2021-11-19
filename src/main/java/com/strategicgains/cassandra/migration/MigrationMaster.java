@@ -1,4 +1,4 @@
-package com.pingidentity.db.migration;
+package com.strategicgains.cassandra.migration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,9 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.datastax.driver.core.Session;
-import com.pingidentity.db.migration.metadata.CassandraMetadataStrategy;
-import com.pingidentity.db.migration.metadata.Metadata;
-import com.pingidentity.db.migration.metadata.MetadataStrategy;
+import com.strategicgains.cassandra.migration.metadata.CassandraMetadataStrategy;
+import com.strategicgains.cassandra.migration.metadata.Metadata;
+import com.strategicgains.cassandra.migration.metadata.MetadataStrategy;
 
 /**
  * @author tfredrich
@@ -27,7 +27,7 @@ public class MigrationMaster
 	private static final int UNINITIALIZED = -1;
 
 	private MigrationConfiguration configuration;
-	private Set<Migration> migrations = new HashSet<Migration>();
+	private Set<Migration> migrations = new HashSet<>();
 	private MetadataStrategy metadata;
 
 	public MigrationMaster()
@@ -78,7 +78,7 @@ public class MigrationMaster
 		}
 
 		Collection<Migration> scriptMigrations = discoverMigrationScripts();
-		List<Migration> allMigrations = new ArrayList<Migration>(migrations.size() + scriptMigrations.size());
+		List<Migration> allMigrations = new ArrayList<>(migrations.size() + scriptMigrations.size());
 		allMigrations.addAll(migrations);
 		allMigrations.addAll(scriptMigrations);
 		Collections.sort(allMigrations, Collections.reverseOrder());
@@ -86,7 +86,7 @@ public class MigrationMaster
 
 		if (currentVersion < latestVersion)
 		{
-			LOG.info(String.format("Database needs migration from current version %d to version %d", currentVersion, latestVersion));
+			LOG.info("Database needs migration from current version {} to version {}", currentVersion, latestVersion);
 
 			try
 			{
@@ -116,6 +116,7 @@ public class MigrationMaster
 			}
 			catch (InterruptedException e)
 			{
+				LOG.warn("Database migration interrupted", e);
 				return;
 			}
 		}
@@ -138,7 +139,7 @@ public class MigrationMaster
 		{
 			if (migration.isApplicable(from, to))
 			{
-				LOG.info("Migrating database to version " + migration.getVersion());
+				LOG.info("Migrating database to version {}.", migration.getVersion());
 				long startTimeMillis = System.currentTimeMillis();
 				boolean wasSuccessful = migration.migrate(session);
 				long executionTime = System.currentTimeMillis() - startTimeMillis;

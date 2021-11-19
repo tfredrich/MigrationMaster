@@ -1,4 +1,4 @@
-package com.pingidentity.db.migration;
+package com.strategicgains.cassandra.migration;
 
 import java.io.IOException;
 
@@ -6,6 +6,9 @@ import org.apache.cassandra.exceptions.ConfigurationException;
 import org.apache.thrift.transport.TTransportException;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.strategicgains.cassandra.migration.MigrationConfiguration;
+import com.strategicgains.cassandra.migration.MigrationMaster;
 
 public class MigrationMasterTest
 {

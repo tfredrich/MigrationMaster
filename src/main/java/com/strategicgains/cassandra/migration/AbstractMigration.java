@@ -1,4 +1,4 @@
-package com.pingidentity.db.migration;
+package com.strategicgains.cassandra.migration;
 
 public abstract class AbstractMigration
 implements Migration

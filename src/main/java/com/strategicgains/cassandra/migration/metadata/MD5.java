@@ -1,4 +1,4 @@
-package com.pingidentity.db.migration.metadata;
+package com.strategicgains.cassandra.migration.metadata;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -7,11 +7,11 @@ import java.util.Base64;
 
 public class MD5
 {
-	private final byte[] md5;
+	private final byte[] digest;
 
 	public MD5(byte[] md5)
 	{
-		this.md5 = md5;
+		this.digest = md5;
 	}
 
 	/**
@@ -34,7 +34,7 @@ public class MD5
 	@Override
 	public int hashCode()
 	{
-		return Arrays.hashCode(this.md5);
+		return Arrays.hashCode(this.digest);
 	}
 
 	@Override
@@ -55,8 +55,8 @@ public class MD5
 			return false;
 		}
 
-		MD5 otherMd5 = (MD5) o;
-		return Arrays.equals(this.md5, otherMd5.md5);
+		MD5 that = (MD5) o;
+		return Arrays.equals(this.digest, that.digest);
 	}
 
 	/**
@@ -64,6 +64,6 @@ public class MD5
 	 */
 	public String asBase64()
 	{
-		return Base64.getEncoder().encodeToString(this.md5);
+		return Base64.getEncoder().encodeToString(this.digest);
 	}
 }

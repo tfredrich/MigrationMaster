@@ -1,4 +1,4 @@
-package com.pingidentity.db.migration.metadata;
+package com.strategicgains.cassandra.migration.metadata;
 
 import com.datastax.driver.core.Session;
 

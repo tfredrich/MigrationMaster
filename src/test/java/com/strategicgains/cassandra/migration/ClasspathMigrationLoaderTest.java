@@ -1,4 +1,4 @@
-package com.pingidentity.db.migration;
+package com.strategicgains.cassandra.migration;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -8,6 +8,11 @@ import java.io.IOException;
 import java.util.Collection;
 
 import org.junit.Test;
+
+import com.strategicgains.cassandra.migration.ClasspathMigrationLoader;
+import com.strategicgains.cassandra.migration.Migration;
+import com.strategicgains.cassandra.migration.MigrationConfiguration;
+import com.strategicgains.cassandra.migration.ScriptMigration;
 
 public class ClasspathMigrationLoaderTest
 {

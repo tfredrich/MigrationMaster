@@ -1,11 +1,11 @@
-package com.pingidentity.db.migration.metadata;
+package com.strategicgains.cassandra.migration.metadata;
 
 import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
-import com.pingidentity.db.migration.MigrationConfiguration;
-import com.pingidentity.db.migration.MigrationException;
+import com.strategicgains.cassandra.migration.MigrationConfiguration;
+import com.strategicgains.cassandra.migration.MigrationException;
 
 public class CassandraMetadataStrategy
 implements MetadataStrategy

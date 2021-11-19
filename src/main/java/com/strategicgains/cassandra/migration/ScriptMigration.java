@@ -1,4 +1,4 @@
-package com.pingidentity.db.migration;
+package com.strategicgains.cassandra.migration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +38,7 @@ extends AbstractMigration
 				session.execute(command);
 			}
 		}
-		catch(Throwable t)
+		catch(Exception t)
 		{
 			LOG.error("Migration failed: " + getDescription(), t);
 			return false;
