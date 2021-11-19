@@ -30,12 +30,25 @@ public class MigrationMaster
 	private Set<Migration> migrations = new HashSet<>();
 	private MetadataStrategy metadata;
 
+	/**
+	 * Manage migrations using the default configuration.
+	 */
 	public MigrationMaster()
 	{
-		super();
-		setConfiguration(new MigrationConfiguration());
+		this(new MigrationConfiguration());
 	}
-	
+
+	/**
+	 * Manage migrations using the provided configuration.
+	 * 
+	 * @param configuration
+	 */
+	public MigrationMaster(MigrationConfiguration configuration)
+	{
+		super();
+		setConfiguration(configuration);
+	}
+
 	public void setConfiguration(MigrationConfiguration configuration)
 	{
 		this.configuration = configuration;

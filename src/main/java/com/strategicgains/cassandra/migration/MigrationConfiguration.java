@@ -21,6 +21,16 @@ public class MigrationConfiguration
 		super();
 	}
 
+	/**
+	 * Allow setup of MigrationConfiguration from a Properties file.
+	 * 
+	 * Supported properties file keys are:
+	 * migration.script_location (default is to use the classpath + /db/migrations)
+	 * migration.metadata_table (default is migration_meta)
+	 * migration.metadata_keyspace (default is migrations)
+	 * 
+	 * @param properties
+	 */
 	public MigrationConfiguration(Properties properties)
 	{
 		setScriptLocation(properties.getProperty(SCRIPT_LOCATION, DEFAULT_SCRIPT_LOCATION));
@@ -28,9 +38,18 @@ public class MigrationConfiguration
 		setKeyspace(properties.getProperty(METADATA_KEYSPACE, DEFAULT_METADATA_KEYSPACE));
 	}
 
-	public void setMetadataTable(String property)
+	/**
+	 * Set the name of the Cassandra table that migration metadata will be stored for
+	 * each migration performed. This table will be initialized on execution of the
+	 * first migration performed. Default is migration_meta.
+	 * 
+	 * @param tableName
+	 * @return
+	 */
+	public MigrationConfiguration setMetadataTable(String tableName)
 	{
-		this.metadataTable = property;
+		this.metadataTable = tableName;
+		return this;
 	}
 
 	public String getMetadataTable()
@@ -43,9 +62,17 @@ public class MigrationConfiguration
 		return keyspace;
 	}
 
-	public void setKeyspace(String name)
+	/**
+	 * Set the Cassandra keyspace name in which to place the metadata table.
+	 * This keyspace must already exist. Default is migrations.
+	 * 
+	 * @param keyspaceName
+	 * @return
+	 */
+	public MigrationConfiguration setKeyspace(String keyspaceName)
 	{
-		this.keyspace = name;
+		this.keyspace = keyspaceName;
+		return this;
 	}
 
 	public String getScriptLocation()
@@ -53,8 +80,16 @@ public class MigrationConfiguration
 		return scriptLocation;
 	}
 
-	public void setScriptLocation(String scriptLocation)
+	/**
+	 * Set the path (within the classpath) to where Cassandra (CQL) migration scripts
+	 * are located. Default is /db/migrations.
+	 * 
+	 * @param scriptLocation
+	 * @return
+	 */
+	public MigrationConfiguration setScriptLocation(String scriptLocation)
 	{
 		this.scriptLocation = scriptLocation;
+		return this;
 	}
 }
