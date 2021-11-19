@@ -5,6 +5,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Base64;
 
+import com.strategicgains.cassandra.migration.MigrationException;
+
 public class MD5
 {
 	private final byte[] digest;
@@ -27,7 +29,7 @@ public class MD5
 		}
 		catch (NoSuchAlgorithmException e)
 		{
-			throw new RuntimeException(e);
+			throw new MigrationException(e);
 		}
 	}
 
