@@ -8,7 +8,7 @@ public interface MetadataStrategy
 	public int getCurrentVersion(Session session);
 	public void initialize(Session session);
 	public void update(Session session, Metadata metadata);
-	public boolean acquire(Session session);
+	public boolean acquireLock(Session session);
 	public boolean isLocked(Session session);
-	public void release(Session session);
+	public void releaseLock(Session session);
 }

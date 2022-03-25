@@ -130,6 +130,8 @@ public class MigrationMaster
 			catch (InterruptedException e)
 			{
 				LOG.warn("Database migration interrupted", e);
+				// Restore interrupted state...
+			    Thread.currentThread().interrupt();
 				return;
 			}
 		}
@@ -138,12 +140,12 @@ public class MigrationMaster
 
 	private boolean acquireLock(Session session)
 	{
-		return metadata.acquire(session);
+		return metadata.acquireLock(session);
 	}
 
 	private void releaseLock(Session session)
 	{
-		metadata.release(session);
+		metadata.releaseLock(session);
 	}
 
 	private boolean process(final Session session, final List<Migration> allMigrations, final int from, final int to)

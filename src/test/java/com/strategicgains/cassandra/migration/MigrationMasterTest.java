@@ -1,14 +1,13 @@
 package com.strategicgains.cassandra.migration;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
 
 import org.apache.cassandra.exceptions.ConfigurationException;
 import org.apache.thrift.transport.TTransportException;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import com.strategicgains.cassandra.migration.MigrationConfiguration;
-import com.strategicgains.cassandra.migration.MigrationMaster;
 
 public class MigrationMasterTest
 {
@@ -32,5 +31,6 @@ public class MigrationMasterTest
 
 		// perform the migration.
 		migration.migrate(CassandraManager.session());
+		assertTrue(true);
 	}
 }
